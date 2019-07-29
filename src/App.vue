@@ -3,24 +3,21 @@
     <Navbar />
     <h1>{{ title }}</h1>
     <!-- v-bind props -->
-    <Blogs />
+    <router-view />
   </div>
 </template>
 
 <script>
 import Navbar from "./components/Navbar";
-import Blogs from "./components/Blogs";
+import Home from "./components/Home";
 
 export default {
   name: "App",
   components: {
-    Navbar,
-    Blogs
+    Navbar
   },
   data() {
-    return {
-      title: "VUEJS"
-    };
+    return { title: "VUEJS" };
   },
   methods: {}
 };

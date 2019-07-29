@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue'
 import Home from './components/Home.vue'
 import About from './components/About.vue'
+import ViewProfile from './components/ViewProfile.vue'
 
 
 Vue.use(VueRouter);
@@ -13,8 +14,17 @@ export const router = new VueRouter({
   //cause use browserRouter rather than hashRouter because of api
   mode: 'history', 
   routes: [
-    { path: '/', component: Home },
-    { path: '/about', component: About },
+    { path: '/', name: 'Home' , component: Home },
+    {
+      path: '/profile/:user_id',
+      name: 'ViewProfile',
+      component: ViewProfile
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
+    },
   ]
 })
 

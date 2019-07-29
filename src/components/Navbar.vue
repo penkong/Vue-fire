@@ -1,33 +1,46 @@
 <template>
-  <nav>
+  <nav class="main-nav">
     <ul>
       <li>
-        <a href="#" target="_blank" rel="noopener noreferrer">Home</a>
+        <router-link to="/">Home</router-link>
       </li>
       <li>
-        <a href="#" target="_blank" rel="noopener noreferrer">About</a>
+        <router-link to="/about">About</router-link>
       </li>
-      <li>
-        <a href="#" target="_blank" rel="noopener noreferrer">Contact</a>
-      </li>
+      <h2>User Profiles</h2>
+      <ul>
+        <li v-for="(id, index) in userIds" :key="index">
+          <router-link :to="{ name: 'ViewProfile', params: { user_id : id}}">
+            <span>profile {{ id }}</span>
+          </router-link>
+        </li>
+      </ul>
     </ul>
   </nav>
 </template>
 
 <script>
 export default {
-  name: "Navbar"
+  name: "Navbar",
+  data() {
+    return {
+      userIds: ["1", "2", "3", "4"]
+    };
+  }
 };
 </script>
 
 <style scoped>
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+a {
+  color: #42b983;
+}
 nav {
   text-align: center;
 }
-nav ul {
-  padding: 0;
-}
-
 nav li {
   display: inline-block;
   list-style-type: none;

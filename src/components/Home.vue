@@ -4,8 +4,7 @@
 
 <script>
 export default {
-  name: "Home",
-  data() {}
+  name: "Home"
 };
 </script>
 

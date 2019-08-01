@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import firebase from "firebase";
 import slugify from "slugify";
 import db from "../../firebase/init";
 export default {
@@ -39,7 +40,7 @@ export default {
   methods: {
     signuper() {
       // it save in firebase Auth db diff from normal db
-      if (this.alias) {
+      if (this.alias && this.email && this.password) {
         this.slug = slugify(this.alias, {
           replacement: "-",
           remove: /[$*_+~.()'"!\-:@]/g,
@@ -51,11 +52,29 @@ export default {
           if (doc.exists) {
             this.feedback = "this alias already exists";
           } else {
-            this.feedback = "this alias is free to use";
+            // firebase package do auth process here
+            this.feedback = null;
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(this.email, this.password)
+              // it give us back cred obj back
+              .then(cred => {
+                console.log(cred.user);
+                ref.set({
+                  alias: this.alias,
+                  geolocation: null,
+                  user_id: cred.user.uid
+                });
+              })
+              .then(() => this.$router.push({ name: "GMap" }))
+              .catch(err => {
+                console.log(err);
+                this.feedback = err.message;
+              });
           }
         });
       } else {
-        this.feedback = "You must enter an alias";
+        this.feedback = "You must enter all fields";
       }
     }
   }

@@ -2,13 +2,16 @@
   <div class="navbar">
     <nav class="deep-purple darken-1">
       <div class="container">
-        <a class="brand-logo left" href="/">Vue Geo</a>
+        <router-link :to="{name: 'GMap'}" class="brand-logo left" href="/">Vue Geo</router-link>
         <ul class="right">
           <li>
-            <a href="/">Sign Up</a>
+            <router-link :to="{ name: 'Signup' }">Sign Up</router-link>
           </li>
           <li>
-            <a href="/">Login</a>
+            <router-link :to="{ name: 'Login'}">Login</router-link>
+          </li>
+          <li>
+            <a @click="logout">Logout</a>
           </li>
         </ul>
       </div>
@@ -17,10 +20,22 @@
 </template>
 
 <script>
+import firebase from "firebase";
+
 export default {
   name: "Navbar",
   data() {
     return {};
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: "Login" });
+        });
+    }
   }
 };
 </script>
